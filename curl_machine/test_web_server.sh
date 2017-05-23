@@ -10,7 +10,7 @@ target_host="172.17.0.2"
 target_host="bap_web"
 
 # target host port
-target_port='80'
+target_port="80"
 
 # compiling target url
 url="http://$target_host:$target_port/api/beacon"
