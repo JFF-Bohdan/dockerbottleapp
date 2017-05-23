@@ -1,0 +1,1 @@
+docker rmi kittyhawk/app_image
