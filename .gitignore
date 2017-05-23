@@ -99,3 +99,12 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+#project files
+/log
+node_modules
+cached_uglify
+.idea
+*.log
+*.lprof
+doc

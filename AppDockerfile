@@ -1,0 +1,70 @@
+# based on own OS configuration
+FROM kittyhawk/deb_base
+
+MAINTAINER Bohdan Danishevsky <dbn@aminis.com.ua>
+
+#################
+#     nginx     #
+#################
+# Make NGINX run on the foreground
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+
+# removing nginx default configuration
+RUN rm /etc/nginx/sites-available/default
+
+# adding new configuration for nginx
+COPY ./config/nginx/nginx.conf /etc/nginx/conf.d/
+
+# converting file to unix end line format
+RUN dos2unix /etc/nginx/conf.d/nginx.conf
+
+##################
+#      dirs      #
+##################
+
+# adding directory for log files
+RUN mkdir -p /var/log/bottle_app
+
+# adding directory for app
+RUN mkdir -p /opt/bottle_app
+
+# adding directory for uwsgi configuration
+RUN mkdir -p /etc/bottle_app
+
+#################
+#     uwsgi     #
+#################
+
+# adding uwsgi configuration to image
+ADD ./config/uwsgi/uwsgi_bottle_app.ini /etc/bottle_app/
+
+# converting file to unix end line format
+RUN dos2unix /etc/bottle_app/uwsgi_bottle_app.ini
+
+###################
+#   supervisord   #
+###################
+
+# adding configuration for supervisord
+COPY ./config/suprvisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# converting file to unix end line format
+RUN dos2unix /etc/supervisor/conf.d/supervisord.conf
+
+#################
+#  APPLICATION  #
+#################
+
+# copying app files
+ADD bottle_app /opt/bottle_app
+
+# changing current working directory
+WORKDIR /opt/bottle_app
+
+# installing app requirements
+RUN pip3 install -r requirements.txt
+
+# specifying port which should be exposed
+EXPOSE 80 443 11000
+
+CMD ["/usr/bin/supervisord"]

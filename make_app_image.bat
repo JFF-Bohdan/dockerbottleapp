@@ -1,0 +1,1 @@
+docker build -t kittyhawk/app_image -f AppDockerfile .
