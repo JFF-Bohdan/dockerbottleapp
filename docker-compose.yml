@@ -18,3 +18,5 @@ services:
       - ./logs:/var/log/bottle_app
   acceptor:
     image: kittyhawk/curl_image
+    depends_on:
+      - "bap_web"
