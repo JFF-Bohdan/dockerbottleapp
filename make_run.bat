@@ -1,1 +1,1 @@
-docker run -d --rm -p 8080:80 -p 11000:11000 kittyhawk/app_image
+docker run -d --rm -p 8080:80 -p 11000:11000 -v ./logs:/var/log/supervisor kittyhawk/app_image

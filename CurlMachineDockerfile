@@ -1,0 +1,24 @@
+# based on own OS configuration
+FROM kittyhawk/deb_base
+
+MAINTAINER Bohdan Danishevsky <dbn@aminis.com.ua>
+
+# installing curl
+RUN apt-get -yqq install curl
+
+# adding directory for app
+RUN mkdir -p /opt/test_web_server_app
+
+# copying shell script file
+ADD ./curl_machine/test_web_server.sh /opt/test_web_server_app
+
+# converting file to unix end line format
+RUN dos2unix /opt/test_web_server_app/test_web_server.sh
+
+# making script executable
+RUN chmod o+x /opt/test_web_server_app/test_web_server.sh
+
+# changing current working directory
+WORKDIR /opt/test_web_server_app
+
+CMD ["./test_web_server.sh"]

@@ -1,0 +1,20 @@
+version: "2"
+services:
+  bap_web:
+    image: kittyhawk/app_image
+    ports:
+      - "8080:80"
+    volumes:
+      # logs for system
+      - ./logs:/var/logs
+      
+      # logs for nginx    
+      - ./logs:/var/log/nginx
+      
+      # logs for supervisor
+      - ./logs:/var/log/supervisor
+      
+      # logs for app
+      - ./logs:/var/log/bottle_app
+  acceptor:
+    image: kittyhawk/curl_image

@@ -1,0 +1,1 @@
+docker build -t kittyhawk/curl_image -f CurlMachineDockerfile .
